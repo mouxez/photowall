@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import Title from './Title';
 import PhotoWall from './PhotoWall';
+import AddPhoto from './AddPhoto';
+import {Route} from 'react-router-dom';
 
 export default class Main extends Component {
   constructor() {
@@ -19,22 +21,31 @@ export default class Main extends Component {
         id: "2",
         description: "on a vacation!",
         imageLink: "https://fm.cnbc.com/applications/cnbc.com/resources/img/editorial/2017/08/24/104670887-VacationExplainsTHUMBWEB.1910x1000.jpg"
-        }]
+        }],
     }
     this.removePhoto = this.removePhoto.bind(this)
   }
   removePhoto(postRemoved) {
-    console.log(postRemoved.description)
 
     this.setState((state) => ({
       posts: state.posts.filter(post => post !== postRemoved)
     }))
   }
+  componentDidUpdate(prevProps, prevState) {
+    console.log(prevState.posts)
+    console.log(this.state)
+  }
     render() {
       return (
         <div>
-          <Title title={'PhotoWall'}/>
-          <PhotoWall posts={this.state.posts} onRemovePhoto={this.removePhoto}/>
+              <Route exact path = "/" render={() => (
+                <div>
+                  <Title title={'PhotoWall'} />
+                  <PhotoWall posts={this.state.posts} onRemovePhoto={this.removePhoto} onNavigate={this.navigate}/>
+              </div>
+              )} />
+
+              <Route path = "/AddPhoto" component = {AddPhoto} />
         </div>
       )
     }
