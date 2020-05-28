@@ -9,7 +9,11 @@ const PhotoWall = (props) => {
             <Link className="add-icon" to="/AddPhoto"> </Link>
             {/* <button className="add-icon" onClick={props.onNavigate}></button> - один из вариантов <a> */}
             <div className="photo-grid">
-                {props.posts.map((post, index) => <Photo key={index} post={post} onRemovePhoto={props.onRemovePhoto} />)}
+                {props.posts
+                .sort(function(x, y) {
+                    return y.id - x.id
+                })
+                .map((post, index) => <Photo key={index} post={post} onRemovePhoto={props.onRemovePhoto} />)}
             </div>
         </>
     )
